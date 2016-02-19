@@ -4,9 +4,17 @@ using UnityEditor;
 #endif
 using System.Collections;
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+ *                                                               *
+ *                                                               *
+ * Author: Michael Peck                                          *
+ * Date: 2/18/2016                                               *
+ *                                                               *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 public class DamageCalculatiorInspector : Editor {
 #if UNITY_EDITOR
-    [MenuItem ("E-Z Damage/Create HelloWorld/Test")]
+    [MenuItem ("E-Z Damage/Create HelloWorld/")]
     [MenuItem ("E-Z Damage/Create AwesomeSauce")]
     
     /*private static void CreateHelloWorldGameObject()

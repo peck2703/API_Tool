@@ -3,6 +3,14 @@ using UnityEditor;
 using System.Collections;
 using UnityEditor.AnimatedValues;
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+ *                                                               *
+ *                                                               *
+ *      Author: Michael Peck                                     *
+ *      Date: 2/18/2016                                          *
+ *                                                               *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 public class DamageWindow : EditorWindow
 {
     [MenuItem("Window/E-Z Damage")]
