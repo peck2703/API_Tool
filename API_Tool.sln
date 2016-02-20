@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2015
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API_Tool.CSharp.Editor", "API_Tool.CSharp.Editor.csproj", "{272EDA5B-5663-7FF2-A127-4EEC695E31BA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API_Tool.CSharp", "API_Tool.CSharp.csproj", "{2905BE4A-F835-5890-DAEA-1297B7F9CCB0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +9,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{272EDA5B-5663-7FF2-A127-4EEC695E31BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{272EDA5B-5663-7FF2-A127-4EEC695E31BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{272EDA5B-5663-7FF2-A127-4EEC695E31BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{272EDA5B-5663-7FF2-A127-4EEC695E31BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2905BE4A-F835-5890-DAEA-1297B7F9CCB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2905BE4A-F835-5890-DAEA-1297B7F9CCB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2905BE4A-F835-5890-DAEA-1297B7F9CCB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2905BE4A-F835-5890-DAEA-1297B7F9CCB0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
