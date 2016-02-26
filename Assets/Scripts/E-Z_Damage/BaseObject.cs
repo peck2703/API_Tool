@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
  * This will be a base class that will create a class that will  *
@@ -13,7 +15,21 @@ using System.Collections;
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 namespace API_TOOL{
-    public class BaseObject : MonoBehaviour{
+    public class BaseObject : MonoBehaviour
+    {
+
+        /* float EZ_MaterialBase
+        GameObject EZ_MaterialWood;          // This will be the material mulitplier?
+        GameObject EZ_MaterialMetal;
+        GameObject EZ_MaterialGlass;
+        GameObject[] EZ_Materials;*/         // Or a list...since removing and adding elements is easier.
+
+        List<string> EZ_Materials;      //Compare the strings to get default floats
+
+        float EZ_MaterialWood;          // This will be the material mulitplier?
+        float EZ_MaterialMetal;
+        float EZ_MaterialGlass;
+        
 
         string defaultChoice;
 

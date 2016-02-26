@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
  * This will be a base class that will create a class that will  *
@@ -12,19 +13,59 @@ using System.Collections;
  *                                                               *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-namespace API_TOOL{
-    public class BaseCharacter : MonoBehaviour{
+namespace API_TOOL
+{
+    public class BaseCharacter : MonoBehaviour
+    {
+
+        public float EZ_baseDamage;
+        public List<Transform> EZ_BodyParts;            // or Transform[] ...This will grab the collider.
+
+        private float EZ_Multiplier;                    // Multiplier will change based on which Body Part it is.
+        private bool EZ_FallingDamageBool;              // Whether or not Falling Damage is activated.
+        private bool EZ_InstantKill;                    // Whether or not Instant Kill is activated.
+        private int EZ_Health; // What is this number?  // The Starting Health
+        private float EZ_FallingDamage;                 // Base Falling Damage.
+
+
+        /* Are we doing Array of body parts or listing them out? Or default one and custom the other?*/
+
+        GameObject EZ_BodyHead;          = 1.8f;
+        GameObject EZ_BodyTorso;         = 1.2f;
+        GameObject EZ_BodyRightArm;      = 0.8f;
+        GameObject EZ_BodyLeftArm;       = 0.8f;         // Upper vs Lower arm omitted because research states that the values are equal.
+        GameObject EZ_BodyRightLeg;      = 0.8f;
+        GameObject EZ_BodyLeftLeg;       = 0.8f;     
+        GameObject BodyUpperRightLeg;    = 1.04f;        // We should consider condensing left and right of each extremity.
+        GameObject BodyUpperLeftLeg;     = 1.04f;
+        GameObject BodyLowerRightLeg;    = 1.03f;  
+        GameObject BodyLowerLeftLeg;     = 1.03f;
+
+        //Setting them up as base values...based on the average dmg rate from Anthony's research.
+
+        float EZ_BodyHeadRate          = 1.8f;
+        float EZ_BodyTorsoRate         = 1.2f;
+        float EZ_BodyRightArmRate      = 0.8f;
+        float EZ_BodyLeftArmRate       = 0.8f;         // Upper vs Lower arm omitted because research states that the values are equal.
+        float EZ_BodyRightLegRate      = 0.8f;
+        float EZ_BodyLeftLegRate       = 0.8f;     
+        float BodyUpperRightLegRate    = 1.04f;        // We should consider condensing left and right of each extremity.
+        float BodyUpperLeftLegRate     = 1.04f;
+        float BodyLowerRightLegRate    = 1.03f;  
+        float BodyLowerLeftLegRate     = 1.03f;
 
         string defaultChoice;
 
         /* Public accessor property for the Editor window to review the choice for each
          * cloned copy of this script. This can only be set upon construction*/
-        public string DefaultChoice{
+        public string DefaultChoice
+        {
             get { return defaultChoice; }
         }
 
         //Public access method to set the default value when it is constructed in the DamageCalculatorClass.cs
-        public void SetDefault(string DefaultChoice){
+        public void SetDefault(string DefaultChoice)
+        {
             defaultChoice = DefaultChoice;
         }
 
@@ -37,5 +78,62 @@ namespace API_TOOL{
         public virtual void Update(){
 
         }
+
+        /* For the Default Selection:
+        ** 
+        ** The user will input the body parts name (in the array?),
+        ** if the variable is empty, it is null.
+        ** We assign the correct damage rate to the body part,
+        ** Check if the body part has been hit, if so...
+        ** This class may be called from another script.
+        ** Check the name of the hit gameobject
+        ** EZ_Multiplier = hit object multiplier
+        ** health -= EZ_baseDamage * EZ_Mulitplier.
+        ** reset muliplier.
+
+
+        ** For the Addition of a body part:
+
+        ** Probably easier to have a list, since adding and removing are easier
+        ** Add to the gameObject list...if possible to name the added element, we should consider that
+        ** Have them add a multiplier, maybe have text explaining the range of the multiplier.
+        ** We should consider clamping the range.
+        ** Check if the body part has been hit, if so...
+        ** This class may be called from another script.
+        ** Check the name of the hit gameobject
+        ** EZ_Multiplier = hit object multiplier
+        ** health -= EZ_baseDamage * EZ_Mulitplier.
+        ** reset EZ_Multiplier.
+
+
+        ** For an Falling damage:
+
+        ** If bool is selected,
+        ** Assign maximum height for fall damage before death.
+        ** Ask for multiplier, maybe have text explaining the range of the multiplier.
+        ** Need to talk about how to detect if player is falling and the distance of the fall.
+        ** health -= EZ_FallingDamageBase * EZ_Multiplier.
+        ** Reset EZ_Multiplier.
+
+        ** For Instant Kill:
+
+        ** If bool is selected,
+        ** If any body part on the list is hit
+        ** Call Death script
+        ** We need to make a death script...or set health to 0;
+        ** Perhaps allow user to give their death script...or input method name and SendMessage.DontRequireReceiver("");
+
+
+        ** For Object Damage:
+        
+        ** Same flow as Player damage, but we should have another name for health...durability?
+        
+        
+        ** For Weapon Damage:
+        
+        ** Add another multiplier that increases the rate of damage
+        ** Based on how powerful the weapon is.
+        ** flow is the same as player damage. 
+        */
     }
 }
