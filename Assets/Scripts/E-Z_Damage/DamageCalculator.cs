@@ -14,15 +14,15 @@ using System;
  *                                                               *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-namespace API_TOOL{
-    public class DamageCalculator : Editor{
-
+namespace API_TOOL
+{
+    public class DamageCalculator : Editor
+    {
         public GameObject testSubject;
-        DamageWindow myWindow;
 
         [MenuItem("E-Z Damage/Create GameObject")]
-        private static void CreateGameObject(){
-
+        private static void CreateGameObject()
+        {
             GameObject selectedGO = Selection.activeGameObject;
             int option = EditorUtility.DisplayDialogComplex("Select Type of Object",
                 "Pick One of the Following Objects to Start",
@@ -30,34 +30,38 @@ namespace API_TOOL{
                 "Weapon",
                 "Advanced/Custom");
 
-            switch (option){
+            switch (option)
+            {
                 case 0:
-                    if (selectedGO != null){
+                    if (selectedGO != null)
+                    {
                         string choice;
                         //Create a character object by first populating a window
                         if (EditorUtility.DisplayDialog("Select Defaults for Character Class",
                             "Would You Like to Load the Default Settings for Characters, or Load Customs Settings?",
                             "Default",
-                            "Custom")){
+                            "Custom"))
+                        {
                             choice = "Default";
 
-                            DamageWindow.ShowWindow();
+                            SetupWindow.ShowWindow();
 
                             GameObject go = new GameObject("Character_EZ_Character");
                             go.transform.SetParent(selectedGO.transform);
 
                             BaseCharacter myBase = (BaseCharacter)go.AddComponent<BaseCharacter>();//.SetDefault(choice);
-                            go.GetComponent<BaseCharacter>().SetDefault(choice);
+                            myBase.SetDefault(choice);
                         }
-                        else{
+                        else
+                        {
                             choice = "Custom";
-                            DamageWindow.ShowWindow();
+                            SetupWindow.ShowWindow();
 
                             GameObject go = new GameObject("MyCharacterGameObject");
                             go.transform.SetParent(selectedGO.transform);
 
                             BaseCharacter myBase = (BaseCharacter)go.AddComponent<BaseCharacter>();//.SetDefault(choice);
-                            go.GetComponent<BaseCharacter>().SetDefault(choice);
+                            myBase.SetDefault(choice);
                         }
                     }
                     else
@@ -65,13 +69,15 @@ namespace API_TOOL{
                     break;
                 case 1:
                     //Create a Weapon object by first populating a window
-                    if (selectedGO != null){
+                    if (selectedGO != null)
+                    {
                         //Create a character object by first populating a window
 
-                        GameObject go = new GameObject("Weapon");
+                        GameObject go = new GameObject();
                         go.transform.SetParent(selectedGO.transform);
+
                         go.AddComponent<BaseWeapon>();
-                        go.name = selectedGO.name + "_EZ_Character";
+                        go.name = selectedGO.name + "_EZ_Weapon";
                     }
                     else
                         Debug.LogError("Object Not Selected");
@@ -85,10 +91,12 @@ namespace API_TOOL{
                        "Vehicle / Object",
                        "Elemental (Broken)",
                        "Back");
-                    switch (secondary){
+                    switch (secondary)
+                    {
                         case 0:
                             //Create a Vehicle Object using a template of character
-                            if (selectedGO != null){
+                            if (selectedGO != null)
+                            {
                                 //Create a character object by first populating a window
 
                                 GameObject go = new GameObject("Vehicle");

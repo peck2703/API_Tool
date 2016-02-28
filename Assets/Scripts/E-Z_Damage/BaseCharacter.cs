@@ -17,42 +17,66 @@ namespace API_TOOL
 {
     public class BaseCharacter : MonoBehaviour
     {
-
+        [HideInInspector]
         public float EZ_baseDamage;
+        [HideInInspector]
         public List<Transform> EZ_BodyParts;            // or Transform[] ...This will grab the collider.
-
-        private float EZ_Multiplier;                    // Multiplier will change based on which Body Part it is.
-        private bool EZ_FallingDamageBool;              // Whether or not Falling Damage is activated.
-        private bool EZ_InstantKill;                    // Whether or not Instant Kill is activated.
-        private int EZ_Health; // What is this number?  // The Starting Health
-        private float EZ_FallingDamage;                 // Base Falling Damage.
+        [HideInInspector]
+        public float EZ_Multiplier;                     // Multiplier will change based on which Body Part it is.
+        [HideInInspector]
+        public bool EZ_FallingDamageBool;              // Whether or not Falling Damage is activated.
+        [HideInInspector]
+        public bool EZ_InstantKill;                    // Whether or not Instant Kill is activated.
+        [HideInInspector]
+        public int EZ_Health; // What is this number?  // The Starting Health
+        [HideInInspector]
+        public float EZ_FallingDamage;                 // Base Falling Damage.
 
 
         /* Are we doing Array of body parts or listing them out? Or default one and custom the other?*/
-
-        GameObject EZ_BodyHead;          = 1.8f;
-        GameObject EZ_BodyTorso;         = 1.2f;
-        GameObject EZ_BodyRightArm;      = 0.8f;
-        GameObject EZ_BodyLeftArm;       = 0.8f;         // Upper vs Lower arm omitted because research states that the values are equal.
-        GameObject EZ_BodyRightLeg;      = 0.8f;
-        GameObject EZ_BodyLeftLeg;       = 0.8f;     
-        GameObject BodyUpperRightLeg;    = 1.04f;        // We should consider condensing left and right of each extremity.
-        GameObject BodyUpperLeftLeg;     = 1.04f;
-        GameObject BodyLowerRightLeg;    = 1.03f;  
-        GameObject BodyLowerLeftLeg;     = 1.03f;
+        [HideInInspector]
+        public Transform/*List<Transform>*/ EZ_BodyHead;          //= 1.8f;
+        [HideInInspector]
+        public Transform/*List<Transform>*/ EZ_BodyTorso;         //= 1.2f;
+        [HideInInspector]
+        public Transform/*List<Transform>*/ EZ_BodyRightArm;      //= 0.8f;
+        [HideInInspector]
+        public Transform/*List<Transform>*/ EZ_BodyLeftArm;       //= 0.8f;         // Upper vs Lower arm omitted because research states that the values are equal.
+        [HideInInspector]
+        public Transform/*List<Transform>*/ EZ_BodyRightLeg;      //= 0.8f;
+        [HideInInspector]
+        public Transform/*List<Transform>*/ EZ_BodyLeftLeg;       //= 0.8f;     
+        [HideInInspector]
+        public Transform/*List<Transform>*/ BodyUpperRightLeg;    //= 1.04f;        // We should consider condensing left and right of each extremity.
+        [HideInInspector]
+        public Transform/*List<Transform>*/ BodyUpperLeftLeg;     //= 1.04f;
+        [HideInInspector]
+        public Transform/*List<Transform>*/ BodyLowerRightLeg;    //= 1.03f;  
+        [HideInInspector]
+        public Transform/*List<Transform>*/ BodyLowerLeftLeg;     //= 1.03f;
 
         //Setting them up as base values...based on the average dmg rate from Anthony's research.
 
-        float EZ_BodyHeadRate          = 1.8f;
-        float EZ_BodyTorsoRate         = 1.2f;
-        float EZ_BodyRightArmRate      = 0.8f;
-        float EZ_BodyLeftArmRate       = 0.8f;         // Upper vs Lower arm omitted because research states that the values are equal.
-        float EZ_BodyRightLegRate      = 0.8f;
-        float EZ_BodyLeftLegRate       = 0.8f;     
-        float BodyUpperRightLegRate    = 1.04f;        // We should consider condensing left and right of each extremity.
-        float BodyUpperLeftLegRate     = 1.04f;
-        float BodyLowerRightLegRate    = 1.03f;  
-        float BodyLowerLeftLegRate     = 1.03f;
+        [HideInInspector]
+        public float EZ_BodyHeadRate = 1.8f;
+        [HideInInspector]
+        public float EZ_BodyTorsoRate = 1.2f;
+        [HideInInspector]
+        public float EZ_BodyRightArmRate = 0.8f;
+        [HideInInspector]
+        public float EZ_BodyLeftArmRate = 0.8f;         // Upper vs Lower arm omitted because research states that the values are equal.
+        [HideInInspector]
+        public float EZ_BodyRightLegRate = 0.8f;
+        [HideInInspector]
+        public float EZ_BodyLeftLegRate = 0.8f;
+        [HideInInspector]
+        public float BodyUpperRightLegRate = 1.04f;        // We should consider condensing left and right of each extremity.
+        [HideInInspector]
+        public float BodyUpperLeftLegRate = 1.04f;
+        [HideInInspector]
+        public float BodyLowerRightLegRate = 1.03f;
+        [HideInInspector]
+        public  float BodyLowerLeftLegRate     = 1.03f;
 
         string defaultChoice;
 
@@ -69,13 +93,9 @@ namespace API_TOOL
             defaultChoice = DefaultChoice;
         }
 
-        // Use this for initialization
-        public virtual void Start(){
-
-        }
-
-        // Update is called once per frame
-        public virtual void Update(){
+        public BaseCharacter(GameObject attached, List<Transform> limbs, List<float> mulitplier)
+        {
+            attached = this.transform.parent.gameObject;
 
         }
 

@@ -12,27 +12,33 @@ using System.Collections;
  *                                                               *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-namespace API_TOOL{
-    public class BaseWeapon : MonoBehaviour{
+namespace API_TOOL
+{
+    public class BaseWeapon : MonoBehaviour
+    {
         string defaultChoice;
 
         /* Public accessor property for the Editor window to review the choice for each
          * cloned copy of this script. This can only be set upon construction*/
-        public string DefaultChoice{
+        public string DefaultChoice
+        {
             get { return defaultChoice; }
         }
 
         //Public access method to set the default value when it is constructed in the DamageCalculatorClass.cs
-        public void SetDefault(string DefaultChoice){
+        public void SetDefault(string DefaultChoice)
+        {
             defaultChoice = DefaultChoice;
         }
         // Use this for initialization
-        public virtual void Start(){
+        public virtual void Start()
+        {
 
         }
 
         // Update is called once per frame
-        public virtual void Update(){
+        public virtual void Update()
+        {
 
         }
     }
