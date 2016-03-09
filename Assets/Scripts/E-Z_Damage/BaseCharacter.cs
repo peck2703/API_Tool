@@ -35,25 +35,25 @@ namespace API_TOOL
 
         /* Are we doing Array of body parts or listing them out? Or default one and custom the other?*/
         [HideInInspector]
-        public Transform[]/*List<Transform>*/ EZ_BodyHead;          //= 1.8f;
+        public GameObject/*List<GameObject>*/ EZ_BodyHead;          //= 1.8f;
         [HideInInspector]
-        public Transform[]/*List<Transform>*/ EZ_BodyTorso;         //= 1.2f;
+        public GameObject/*List<GameObject>*/ EZ_BodyTorso;         //= 1.2f;
         [HideInInspector]
-        public Transform[]/*List<Transform>*/ EZ_BodyRightArm;      //= 0.8f;
+        public GameObject/*List<GameObject>*/ EZ_BodyRightArm;      //= 0.8f;
         [HideInInspector]
-        public Transform[]/*List<Transform>*/ EZ_BodyLeftArm;       //= 0.8f;         // Upper vs Lower arm omitted because research states that the values are equal.
+        public GameObject/*List<GameObject>*/ EZ_BodyLeftArm;       //= 0.8f;         // Upper vs Lower arm omitted because research states that the values are equal.
         [HideInInspector]
-        public Transform[]/*List<Transform>*/ EZ_BodyRightLeg;      //= 0.8f;
+        public GameObject/*List<GameObject>*/ EZ_BodyRightLeg;      //= 0.8f;
         [HideInInspector]
-        public Transform[]/*List<Transform>*/ EZ_BodyLeftLeg;       //= 0.8f;     
+        public GameObject/*List<GameObject>*/ EZ_BodyLeftLeg;       //= 0.8f;     
         [HideInInspector]
-        public Transform[]/*List<Transform>*/ BodyUpperRightLeg;    //= 1.04f;        // We should consider condensing left and right of each extremity.
+        public GameObject/*List<GameObject>*/ BodyUpperRightLeg;    //= 1.04f;        // We should consider condensing left and right of each extremity.
         [HideInInspector]
-        public Transform[]/*List<Transform>*/ BodyUpperLeftLeg;     //= 1.04f;
+        public GameObject/*List<GameObject>*/ BodyUpperLeftLeg;     //= 1.04f;
         [HideInInspector]
-        public Transform[]/*List<Transform>*/ BodyLowerRightLeg;    //= 1.03f;  
+        public GameObject/*List<GameObject>*/ BodyLowerRightLeg;    //= 1.03f;  
         [HideInInspector]
-        public Transform[]/*List<Transform>*/ BodyLowerLeftLeg;     //= 1.03f;
+        public GameObject[]/*List<GameObject>*/ BodyLowerLeftLeg;     //= 1.03f;
 
         //Setting them up as base values...based on the average dmg rate from Anthony's research.
 

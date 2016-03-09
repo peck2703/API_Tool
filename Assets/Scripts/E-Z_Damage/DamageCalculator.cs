@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections;
+using System.Collections.Generic;
 using System;
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
@@ -19,6 +20,8 @@ namespace API_TOOL
     public class DamageCalculator : Editor
     {
         public GameObject testSubject;
+        GameObject healthScript;
+        
 
         [MenuItem("E-Z Damage/Create GameObject")]
         private static void CreateGameObject()
@@ -44,8 +47,6 @@ namespace API_TOOL
                         {
                             choice = "Default";
 
-                            SetupWindow.ShowWindow();
-
                             GameObject go = new GameObject("Character_EZ_Character");
                             go.transform.SetParent(selectedGO.transform);
 
@@ -55,7 +56,6 @@ namespace API_TOOL
                         else
                         {
                             choice = "Custom";
-                            SetupWindow.ShowWindow();
 
                             GameObject go = new GameObject("MyCharacterGameObject");
                             go.transform.SetParent(selectedGO.transform);
@@ -122,6 +122,19 @@ namespace API_TOOL
                     }
                     break;
             }
+            //  MonoScript[] scripts = new (MonoScript[])Resources.FindObjectsOfTypeAll<MonoScript>;
+            MonoScript[] scripts = Resources.FindObjectsOfTypeAll<MonoScript>();
+            List<MonoScript> result = new List<MonoScript>();
+
+            foreach (MonoScript m in scripts)
+            {
+                if (m.GetClass() != null && m.GetClass().IsSubclassOf(typeof(MonoScript)))
+                {
+                    result.Add(m);
+                    Debug.Log(m.name);
+                }
+            }
+            result.ToArray();
         }
     }
 }

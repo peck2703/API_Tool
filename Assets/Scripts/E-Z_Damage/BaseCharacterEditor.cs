@@ -12,19 +12,19 @@ namespace API_TOOL
 
     public class BaseCharacterEditor : Editor
     {
+        List<MonoScript> result = new List<MonoScript>();
+
         GameObject currentGO = Selection.activeGameObject;
-
-
-        Transform[]/*List<Transform>*/ EZ_BodyHead;          //= 1.8f;
-        Transform[]/*List<Transform>*/ EZ_BodyTorso;         //= 1.2f;
-        Transform[]/*List<Transform>*/ EZ_BodyRightArm;      //= 0.8f;
-        Transform[]/*List<Transform>*/ EZ_BodyLeftArm;       //= 0.8f;         // Upper vs Lower arm omitted because research states that the values are equal.
-        Transform[]/*List<Transform>*/ EZ_BodyRightLeg;      //= 0.8f;
-        Transform[]/*List<Transform>*/ EZ_BodyLeftLeg;       //= 0.8f;     
-        Transform[]/*List<Transform>*/ BodyUpperRightLeg;    //= 1.04f;        // We should consider condensing left and right of each extremity.
-        Transform[]/*List<Transform>*/ BodyUpperLeftLeg;     //= 1.04f;
-        Transform[]/*List<Transform>*/ BodyLowerRightLeg;    //= 1.03f;  
-        Transform[]/*List<Transform>*/ BodyLowerLeftLeg;     //= 1.03f;
+        GameObject[]/*List<GameObject>*/ EZ_BodyHead;          //= 1.8f;
+        GameObject[]/*List<GameObject>*/ EZ_BodyTorso;         //= 1.2f;
+        GameObject[]/*List<GameObject>*/ EZ_BodyRightArm;      //= 0.8f;
+        GameObject[]/*List<GameObject>*/ EZ_BodyLeftArm;       //= 0.8f;         // Upper vs Lower arm omitted because research states that the values are equal.
+        GameObject[]/*List<GameObject>*/ EZ_BodyRightLeg;      //= 0.8f;
+        GameObject[]/*List<GameObject>*/ EZ_BodyLeftLeg;       //= 0.8f;     
+        GameObject[]/*List<GameObject>*/ BodyUpperRightLeg;    //= 1.04f;        // We should consider condensing left and right of each extremity.
+        GameObject[]/*List<GameObject>*/ BodyUpperLeftLeg;     //= 1.04f;
+        GameObject[]/*List<GameObject>*/ BodyLowerRightLeg;    //= 1.03f;  
+        GameObject[]/*List<Transform>*/ BodyLowerLeftLeg;     //= 1.03f;
 
         SerializedProperty headProp;
         SerializedProperty torsoProp;
@@ -39,6 +39,12 @@ namespace API_TOOL
         SerializedProperty rightArmMultiplier;
         SerializedProperty leftLegMultiplier;
         SerializedProperty rightLegMultiplier;
+
+        SerializedProperty healthReference;
+
+        List<string> arrayScripts = new List<string>();
+
+        private static Dictionary<string, MonoScript> AllScripts = new Dictionary<string, MonoScript>();
 
         void OnEnable()
         {
@@ -59,35 +65,89 @@ namespace API_TOOL
                 rightArmMultiplier = serializedObject.FindProperty("EZ_BodyRightArmRate");
                 leftLegMultiplier = serializedObject.FindProperty("EZ_BodyLeftLegRate");
                 rightLegMultiplier = serializedObject.FindProperty("EZ_BodyRightLegRate");
+                healthReference = serializedObject.FindProperty("healthScript");
+
+                foreach (var script in result)
+                {
+                    Debug.Log(script.name);
+                }
+
             }
+
+         /*   AllScripts.Clear();
+            UnityEngine.Object[] scripts = Resources.LoadAll("Scripts");
+
+            foreach (UnityEngine.Object script in scripts)
+            {
+                if (script.GetType().Equals(typeof(MonoScript)))
+                {
+                    AllScripts.Add(script.name, (MonoScript)script);
+                    Debug.Log(script.name);
+                }
+            }*/
         }
 
+        public MonoScript[] GetScriptAssetsOfType<T>()
+        {
+            //  MonoScript[] scripts = new (MonoScript[])Resources.FindObjectsOfTypeAll<MonoScript>;
+            MonoScript[] scripts = Resources.FindObjectsOfTypeAll<MonoScript>();
+            result = new List<MonoScript>();
+
+            foreach (MonoScript m in scripts)
+            {
+                if (m.GetClass() != null && m.GetClass().IsSubclassOf(typeof(T)))
+                {
+                    result.Add(m);
+                }
+            }
+            return result.ToArray();
+        }
         public override void OnInspectorGUI()
         {
             // Update the serializedProperty - always do this in the beginning of OnInspectorGUI.
             serializedObject.Update();
 
-
+            EditorGUILayout.BeginVertical();
             EditorGUILayout.PropertyField(headProp, new GUIContent("Head"),false, null);
-            EditorGUILayout.FloatField("headMultiplier", headMultiplier, GUILayoutOption[] as null);
-            // Show the custom GUI controls.
-            /*EditorGUILayout.IntSlider(damageProp, 0, 100, new GUIContent("Damage"));
-            
+            EditorGUILayout.PropertyField(torsoProp, new GUIContent("Torso"), false, null);
+            EditorGUILayout.PropertyField(leftArmProp, new GUIContent("Left Arm"), false, null);
+            EditorGUILayout.PropertyField(rightArmProp, new GUIContent("Right Arm"), false, null);
+            EditorGUILayout.PropertyField(leftLegProp, new GUIContent("Left Leg"), false, null);
+            EditorGUILayout.PropertyField(rightLegProp, new GUIContent("Right Leg"), false, null);
+            EditorGUILayout.EndVertical();
+            EditorGUILayout.Space();
 
-            // Only show the damage progress bar if all the objects have the same damage value:
-            if (!damageProp.hasMultipleDifferentValues)
-                ProgressBar(damageProp.intValue / 100.0f, "Damage");
+            EditorGUILayout.BeginVertical();
+            EditorGUILayout.PropertyField(headMultiplier, new GUIContent("Head Multiplier"), false, null);
+            EditorGUILayout.PropertyField(torsoMultiplier, new GUIContent("Torso Mulitplier"), false, null);
+            EditorGUILayout.PropertyField(leftArmMultiplier, new GUIContent("Left Arm Mulitplier"), false, null);
+            EditorGUILayout.PropertyField(rightArmMultiplier, new GUIContent("Right Arm Multiper"), false, null);
+            EditorGUILayout.PropertyField(leftLegMultiplier, new GUIContent("Left Leg Multiplier"), false, null);
+            EditorGUILayout.PropertyField(rightLegMultiplier, new GUIContent("Right Leg Multiplier"), false, null);
+            EditorGUILayout.EndVertical();
 
-            EditorGUILayout.IntSlider(armorProp, 0, 100, new GUIContent("Armor"));
+            EditorGUILayout.Space();
 
-            // Only show the armor progress bar if all the objects have the same armor value:
-            if (!armorProp.hasMultipleDifferentValues)
-                ProgressBar(armorProp.intValue / 100.0f, "Armor");
+            foreach(var script in result)
+            {
+                Debug.Log(script.name);
+            }
 
-            EditorGUILayout.PropertyField(gunProp, new GUIContent("Gun Object"));*/
-            //ListIterator("EZ_BodyParts");
-            // Apply changes to the serializedProperty - always do this in the end of OnInspectorGUI.
+            AllScripts.Clear();
+            UnityEngine.Object[] scripts = Resources.LoadAll("Scripts");
+
+            foreach (UnityEngine.Object script in scripts)
+            {
+                if (script.GetType().Equals(typeof(MonoScript)))
+                {
+                    AllScripts.Add(script.name, (MonoScript)script);
+                    Debug.Log(script.name);
+                }
+            }
             serializedObject.ApplyModifiedProperties();
+            /*EditorGUILayout.BeginVertical();
+            EditorGUILayout.PropertyField(healthReference, new GUIContent("Health Script"), false, null);
+            EditorGUILayout.EndVertical();*/
         }
 
         // Custom GUILayout progress bar.
