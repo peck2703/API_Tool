@@ -14,27 +14,51 @@ namespace API_TOOL
     {
         GameObject currentGO = Selection.activeGameObject;
 
+
+        Transform[]/*List<Transform>*/ EZ_BodyHead;          //= 1.8f;
+        Transform[]/*List<Transform>*/ EZ_BodyTorso;         //= 1.2f;
+        Transform[]/*List<Transform>*/ EZ_BodyRightArm;      //= 0.8f;
+        Transform[]/*List<Transform>*/ EZ_BodyLeftArm;       //= 0.8f;         // Upper vs Lower arm omitted because research states that the values are equal.
+        Transform[]/*List<Transform>*/ EZ_BodyRightLeg;      //= 0.8f;
+        Transform[]/*List<Transform>*/ EZ_BodyLeftLeg;       //= 0.8f;     
+        Transform[]/*List<Transform>*/ BodyUpperRightLeg;    //= 1.04f;        // We should consider condensing left and right of each extremity.
+        Transform[]/*List<Transform>*/ BodyUpperLeftLeg;     //= 1.04f;
+        Transform[]/*List<Transform>*/ BodyLowerRightLeg;    //= 1.03f;  
+        Transform[]/*List<Transform>*/ BodyLowerLeftLeg;     //= 1.03f;
+
+        SerializedProperty headProp;
+        SerializedProperty torsoProp;
+        SerializedProperty leftArmProp;
+        SerializedProperty rightArmProp;
+        SerializedProperty leftLegProp;
+        SerializedProperty rightLegProp;
+
+        SerializedProperty headMultiplier;
+        SerializedProperty torsoMultiplier;
+        SerializedProperty leftArmMultiplier;
+        SerializedProperty rightArmMultiplier;
+        SerializedProperty leftLegMultiplier;
+        SerializedProperty rightLegMultiplier;
+
         void OnEnable()
         {
             if (currentGO.GetComponent<BaseCharacter>().DefaultChoice == "Default")
             {
-                /*SerializedProperty headProp;
-                SerializedProperty torsoProp;
-                SerializedProperty leftArmProp;
-                SerializedProperty rightArmProp;
-                SerializedProperty leftLegProp;
-                SerializedProperty rightLegProp;
-                */
-
-                Debug.Log(currentGO);
-                if (currentGO.GetComponent<BaseCharacter>().DefaultChoice == "Default")
-                {
-                    Debug.Log("Default:  " + currentGO);
-                }
                 // Setup the SerializedProperties.
-                //damageProp = serializedObject.FindProperty("damage");
-                //armorProp = serializedObject.FindProperty("armor");
-                //gunProp = serializedObject.FindProperty("gun");
+                headProp = serializedObject.FindProperty("EZ_BodyHead");
+                torsoProp = serializedObject.FindProperty("EZ_BodyTorso");
+                leftArmProp = serializedObject.FindProperty("EZ_BodyLeftArm");
+                rightArmProp = serializedObject.FindProperty("EZ_BodyRightArm");
+                leftLegProp = serializedObject.FindProperty("EZ_BodyLeftLeg");
+                rightLegProp = serializedObject.FindProperty("EZ_BodyRightLeg");
+
+                //Setup serialized properties for multiplier
+                headMultiplier = serializedObject.FindProperty("EZ_BodyHeadRate");
+                torsoMultiplier = serializedObject.FindProperty("EZ_BodyTorsoRate");
+                leftArmMultiplier = serializedObject.FindProperty("EZ_BodyLeftArmRate");
+                rightArmMultiplier = serializedObject.FindProperty("EZ_BodyRightArmRate");
+                leftLegMultiplier = serializedObject.FindProperty("EZ_BodyLeftLegRate");
+                rightLegMultiplier = serializedObject.FindProperty("EZ_BodyRightLegRate");
             }
         }
 
@@ -43,8 +67,12 @@ namespace API_TOOL
             // Update the serializedProperty - always do this in the beginning of OnInspectorGUI.
             serializedObject.Update();
 
+
+            EditorGUILayout.PropertyField(headProp, new GUIContent("Head"),false, null);
+            EditorGUILayout.FloatField("headMultiplier", headMultiplier, GUILayoutOption[] as null);
             // Show the custom GUI controls.
             /*EditorGUILayout.IntSlider(damageProp, 0, 100, new GUIContent("Damage"));
+            
 
             // Only show the damage progress bar if all the objects have the same damage value:
             if (!damageProp.hasMultipleDifferentValues)
@@ -57,39 +85,11 @@ namespace API_TOOL
                 ProgressBar(armorProp.intValue / 100.0f, "Armor");
 
             EditorGUILayout.PropertyField(gunProp, new GUIContent("Gun Object"));*/
-            ListIterator("EZ_BodyParts");
+            //ListIterator("EZ_BodyParts");
             // Apply changes to the serializedProperty - always do this in the end of OnInspectorGUI.
             serializedObject.ApplyModifiedProperties();
         }
 
-        public void ListIterator(string listName)
-        {
-            //List object
-                    Debug.Log(listName.ToString());
-            SerializedProperty listIterator = serializedObject.FindProperty(listName);
-                    Debug.Log(listIterator.serializedObject.ToString());
-            Rect drawZone = GUILayoutUtility.GetRect(0f, 16f);
-                    //Debug.Log(drawZone);
-            bool showChildren = EditorGUI.PropertyField(drawZone, listIterator);
-                    //Debug.Log(showChildren);
-            listIterator.NextVisible(showChildren);
-                    Debug.Log(listIterator.ToString());
-
-            //List size
-            drawZone = GUILayoutUtility.GetRect(0f, 16f);
-            showChildren = EditorGUI.PropertyField(drawZone, listIterator);
-            bool toBeContinued = listIterator.NextVisible(showChildren);
-
-            //Elements
-            int listElement = 0;
-            while (toBeContinued)
-            {
-                drawZone = GUILayoutUtility.GetRect(0f, 16f);
-                showChildren = EditorGUI.PropertyField(drawZone, listIterator);
-                toBeContinued = listIterator.NextVisible(showChildren);
-                listElement++;
-            }
-        }
         // Custom GUILayout progress bar.
         void ProgressBar(float value, string label)
         {
