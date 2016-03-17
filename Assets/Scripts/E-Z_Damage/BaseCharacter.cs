@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEditor;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -15,67 +17,68 @@ using System.Collections.Generic;
 
 namespace API_TOOL
 {
+    [Serializable]
     public class BaseCharacter : MonoBehaviour
     {
-        [HideInInspector]
+        [SerializeField]
         public float EZ_baseDamage;
-        [HideInInspector]
+        [SerializeField]
         public List<Transform> EZ_BodyParts;            // or Transform[] ...This will grab the collider.
-        [HideInInspector]
+        [SerializeField]
         public float EZ_Multiplier;                     // Multiplier will change based on which Body Part it is.
-        [HideInInspector]
+        [SerializeField]
         public bool EZ_FallingDamageBool;              // Whether or not Falling Damage is activated.
-        [HideInInspector]
+        [SerializeField]
         public bool EZ_InstantKill;                    // Whether or not Instant Kill is activated.
-        [HideInInspector]
+        [SerializeField]
         public int EZ_Health; // What is this number?  // The Starting Health
-        [HideInInspector]
+        [SerializeField]
         public float EZ_FallingDamage;                 // Base Falling Damage.
 
 
         /* Are we doing Array of body parts or listing them out? Or default one and custom the other?*/
-        [HideInInspector]
+        [SerializeField]
         public GameObject/*List<GameObject>*/ EZ_BodyHead;          //= 1.8f;
-        [HideInInspector]
+        [SerializeField]
         public GameObject/*List<GameObject>*/ EZ_BodyTorso;         //= 1.2f;
-        [HideInInspector]
+        [SerializeField]
         public GameObject/*List<GameObject>*/ EZ_BodyRightArm;      //= 0.8f;
-        [HideInInspector]
+        [SerializeField]
         public GameObject/*List<GameObject>*/ EZ_BodyLeftArm;       //= 0.8f;         // Upper vs Lower arm omitted because research states that the values are equal.
-        [HideInInspector]
+        [SerializeField]
         public GameObject/*List<GameObject>*/ EZ_BodyRightLeg;      //= 0.8f;
-        [HideInInspector]
+        [SerializeField]
         public GameObject/*List<GameObject>*/ EZ_BodyLeftLeg;       //= 0.8f;     
-        [HideInInspector]
+        [SerializeField]
         public GameObject/*List<GameObject>*/ BodyUpperRightLeg;    //= 1.04f;        // We should consider condensing left and right of each extremity.
-        [HideInInspector]
+        [SerializeField]
         public GameObject/*List<GameObject>*/ BodyUpperLeftLeg;     //= 1.04f;
-        [HideInInspector]
+        [SerializeField]
         public GameObject/*List<GameObject>*/ BodyLowerRightLeg;    //= 1.03f;  
-        [HideInInspector]
+        [SerializeField]
         public GameObject[]/*List<GameObject>*/ BodyLowerLeftLeg;     //= 1.03f;
 
         //Setting them up as base values...based on the average dmg rate from Anthony's research.
 
-        [HideInInspector]
+        [SerializeField]
         public float EZ_BodyHeadRate = 1.8f;
-        [HideInInspector]
+        [SerializeField]
         public float EZ_BodyTorsoRate = 1.2f;
-        [HideInInspector]
+        [SerializeField]
         public float EZ_BodyRightArmRate = 0.8f;
-        [HideInInspector]
+        [SerializeField]
         public float EZ_BodyLeftArmRate = 0.8f;         // Upper vs Lower arm omitted because research states that the values are equal.
-        [HideInInspector]
+        [SerializeField]
         public float EZ_BodyRightLegRate = 0.8f;
-        [HideInInspector]
+        [SerializeField]
         public float EZ_BodyLeftLegRate = 0.8f;
-        [HideInInspector]
+        [SerializeField]
         public float EZ_BodyUpperRightLegRate = 1.04f;        // We should consider condensing left and right of each extremity.
-        [HideInInspector]
+        [SerializeField]
         public float EZ_BodyUpperLeftLegRate = 1.04f;
-        [HideInInspector]
+        [SerializeField]
         public float EZ_BodyLowerRightLegRate = 1.03f;
-        [HideInInspector]
+        [SerializeField]
         public  float EZ_BodyLowerLeftLegRate = 1.03f;
 
         string defaultChoice;

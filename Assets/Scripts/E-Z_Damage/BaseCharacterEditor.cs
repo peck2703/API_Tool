@@ -1,7 +1,9 @@
 ﻿using UnityEditor;
 using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace API_TOOL
 {
@@ -9,10 +11,14 @@ namespace API_TOOL
     // Automatic handling of multi-object editing, undo, and prefab overrides.
     [CustomEditor(typeof(BaseCharacter))]
     [CanEditMultipleObjects]
-
+    [System.Serializable]
     public class BaseCharacterEditor : Editor
     {
-        List<MonoScript> result = new List<MonoScript>();
+        static List<Type> components;
+        static List<string> componentNames;
+        int index = 0;                                      //Index for the popup menu
+
+        //List<MonoScript> result = new List<MonoScript>();
 
         GameObject currentGO = Selection.activeGameObject;
         GameObject[]/*List<GameObject>*/ EZ_BodyHead;          //= 1.8f;
@@ -42,9 +48,9 @@ namespace API_TOOL
 
         SerializedProperty healthReference;
 
-        List<string> arrayScripts = new List<string>();
+        //List<string> arrayScripts = new List<string>();
 
-        private static Dictionary<string, MonoScript> AllScripts = new Dictionary<string, MonoScript>();
+        //private static Dictionary<string, MonoScript> AllScripts = new Dictionary<string, MonoScript>();
 
         void OnEnable()
         {
@@ -67,40 +73,42 @@ namespace API_TOOL
                 rightLegMultiplier = serializedObject.FindProperty("EZ_BodyRightLegRate");
                 healthReference = serializedObject.FindProperty("healthScript");
 
-                foreach (var script in result)
-                {
-                    Debug.Log(script.name);
-                }
+                //foreach (var script in result)
+                //{
+                //    Debug.Log(script.name);
+                //}
+                Assembly _assembly = Assembly.Load("Assembly-CSharp");
 
+                components = new List<Type>();
+                componentNames = new List<string>();
+
+                foreach (Type type in _assembly.GetTypes())
+                {
+                    if (type.IsClass)
+                    {
+                        if (type.BaseType.FullName.Contains("MonoBehaviour"))
+                        {
+                            components.Add(type);
+                            componentNames.Add(type.Name);
+                            //                    Debug.Log(type.Name);
+                        }
+                        else
+                        {
+                            if (!type.BaseType.FullName.Contains("System"))
+                            {
+                                Type _type = type.BaseType;
+                                components.Add(_type);
+                                componentNames.Add(type.Name);
+                                //                        Debug.Log(type.Name);
+                            }
+                        }
+                    }
+                }
             }
-
-         /*   AllScripts.Clear();
-            UnityEngine.Object[] scripts = Resources.LoadAll("Scripts");
-
-            foreach (UnityEngine.Object script in scripts)
+            foreach (string val in componentNames)
             {
-                if (script.GetType().Equals(typeof(MonoScript)))
-                {
-                    AllScripts.Add(script.name, (MonoScript)script);
-                    Debug.Log(script.name);
-                }
-            }*/
-        }
-
-        public MonoScript[] GetScriptAssetsOfType<T>()
-        {
-            //  MonoScript[] scripts = new (MonoScript[])Resources.FindObjectsOfTypeAll<MonoScript>;
-            MonoScript[] scripts = Resources.FindObjectsOfTypeAll<MonoScript>();
-            result = new List<MonoScript>();
-
-            foreach (MonoScript m in scripts)
-            {
-                if (m.GetClass() != null && m.GetClass().IsSubclassOf(typeof(T)))
-                {
-                    result.Add(m);
-                }
+                Debug.Log(val);
             }
-            return result.ToArray();
         }
         public override void OnInspectorGUI()
         {
@@ -115,6 +123,7 @@ namespace API_TOOL
             EditorGUILayout.PropertyField(leftLegProp, new GUIContent("Left Leg"), false, null);
             EditorGUILayout.PropertyField(rightLegProp, new GUIContent("Right Leg"), false, null);
             EditorGUILayout.EndVertical();
+
             EditorGUILayout.Space();
 
             EditorGUILayout.BeginVertical();
@@ -128,22 +137,10 @@ namespace API_TOOL
 
             EditorGUILayout.Space();
 
-            foreach(var script in result)
-            {
-                Debug.Log(script.name);
-            }
+            EditorGUILayout.BeginVertical();
+            index = EditorGUILayout.Popup("Script:", index, componentNames.ToArray(), EditorStyles.popup);
+            EditorGUILayout.EndVertical();
 
-            AllScripts.Clear();
-            UnityEngine.Object[] scripts = Resources.LoadAll("Scripts");
-
-            foreach (UnityEngine.Object script in scripts)
-            {
-                if (script.GetType().Equals(typeof(MonoScript)))
-                {
-                    AllScripts.Add(script.name, (MonoScript)script);
-                    Debug.Log(script.name);
-                }
-            }
             serializedObject.ApplyModifiedProperties();
             /*EditorGUILayout.BeginVertical();
             EditorGUILayout.PropertyField(healthReference, new GUIContent("Health Script"), false, null);
