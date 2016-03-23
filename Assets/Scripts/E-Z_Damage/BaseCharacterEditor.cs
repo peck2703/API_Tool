@@ -9,15 +9,17 @@ namespace API_TOOL
 {
     // Custom Editor using SerializedProperties.
     // Automatic handling of multi-object editing, undo, and prefab overrides.
+
     [CustomEditor(typeof(BaseCharacter))]
     [CanEditMultipleObjects]
     [System.Serializable]
     public class BaseCharacterEditor : Editor
     {
-        static List<Type> components;
-        static List<string> componentNames;
+        [SerializeField]
+        static List<Type> components = new List<Type>();
+        [SerializeField]
+        static List<string> componentNames = new List<string>();
         int index = 0;                                      //Index for the popup menu
-
         //List<MonoScript> result = new List<MonoScript>();
 
         GameObject currentGO = Selection.activeGameObject;
@@ -32,20 +34,33 @@ namespace API_TOOL
         GameObject[]/*List<GameObject>*/ BodyLowerRightLeg;    //= 1.03f;  
         GameObject[]/*List<Transform>*/ BodyLowerLeftLeg;     //= 1.03f;
 
+        [SerializeField]
         SerializedProperty headProp;
+        [SerializeField]
         SerializedProperty torsoProp;
+        [SerializeField]
         SerializedProperty leftArmProp;
+        [SerializeField]
         SerializedProperty rightArmProp;
+        [SerializeField]
         SerializedProperty leftLegProp;
+        [SerializeField]
         SerializedProperty rightLegProp;
 
+        [SerializeField]
         SerializedProperty headMultiplier;
+        [SerializeField]
         SerializedProperty torsoMultiplier;
+        [SerializeField]
         SerializedProperty leftArmMultiplier;
+        [SerializeField]
         SerializedProperty rightArmMultiplier;
+        [SerializeField]
         SerializedProperty leftLegMultiplier;
+        [SerializeField]
         SerializedProperty rightLegMultiplier;
 
+        [SerializeField]
         SerializedProperty healthReference;
 
         //List<string> arrayScripts = new List<string>();
@@ -54,33 +69,46 @@ namespace API_TOOL
 
         void OnEnable()
         {
+            hideFlags = HideFlags.HideAndDontSave;
+
             if (currentGO.GetComponent<BaseCharacter>().DefaultChoice == "Default")
             {
                 // Setup the SerializedProperties.
+                hideFlags = HideFlags.DontUnloadUnusedAsset;
                 headProp = serializedObject.FindProperty("EZ_BodyHead");
+                hideFlags = HideFlags.DontUnloadUnusedAsset;
                 torsoProp = serializedObject.FindProperty("EZ_BodyTorso");
+                hideFlags = HideFlags.DontUnloadUnusedAsset;
                 leftArmProp = serializedObject.FindProperty("EZ_BodyLeftArm");
+                hideFlags = HideFlags.DontUnloadUnusedAsset;
                 rightArmProp = serializedObject.FindProperty("EZ_BodyRightArm");
+                hideFlags = HideFlags.DontUnloadUnusedAsset;
                 leftLegProp = serializedObject.FindProperty("EZ_BodyLeftLeg");
+                hideFlags = HideFlags.DontUnloadUnusedAsset;
                 rightLegProp = serializedObject.FindProperty("EZ_BodyRightLeg");
 
                 //Setup serialized properties for multiplier
+                hideFlags = HideFlags.DontUnloadUnusedAsset;
                 headMultiplier = serializedObject.FindProperty("EZ_BodyHeadRate");
+                hideFlags = HideFlags.DontUnloadUnusedAsset;
                 torsoMultiplier = serializedObject.FindProperty("EZ_BodyTorsoRate");
+                hideFlags = HideFlags.DontUnloadUnusedAsset;
                 leftArmMultiplier = serializedObject.FindProperty("EZ_BodyLeftArmRate");
+                hideFlags = HideFlags.DontUnloadUnusedAsset;
                 rightArmMultiplier = serializedObject.FindProperty("EZ_BodyRightArmRate");
+                hideFlags = HideFlags.DontUnloadUnusedAsset;
                 leftLegMultiplier = serializedObject.FindProperty("EZ_BodyLeftLegRate");
+                hideFlags = HideFlags.DontUnloadUnusedAsset;
                 rightLegMultiplier = serializedObject.FindProperty("EZ_BodyRightLegRate");
+                hideFlags = HideFlags.DontUnloadUnusedAsset;
                 healthReference = serializedObject.FindProperty("healthScript");
 
                 //foreach (var script in result)
                 //{
                 //    Debug.Log(script.name);
                 //}
+                
                 Assembly _assembly = Assembly.Load("Assembly-CSharp");
-
-                components = new List<Type>();
-                componentNames = new List<string>();
 
                 foreach (Type type in _assembly.GetTypes())
                 {
@@ -116,17 +144,21 @@ namespace API_TOOL
             serializedObject.Update();
 
             EditorGUILayout.BeginVertical();
-            EditorGUILayout.PropertyField(headProp, new GUIContent("Head"),false, null);
-            EditorGUILayout.PropertyField(torsoProp, new GUIContent("Torso"), false, null);
-            EditorGUILayout.PropertyField(leftArmProp, new GUIContent("Left Arm"), false, null);
-            EditorGUILayout.PropertyField(rightArmProp, new GUIContent("Right Arm"), false, null);
-            EditorGUILayout.PropertyField(leftLegProp, new GUIContent("Left Leg"), false, null);
-            EditorGUILayout.PropertyField(rightLegProp, new GUIContent("Right Leg"), false, null);
-            EditorGUILayout.EndVertical();
+            if (headProp != null)
+            { EditorGUILayout.PropertyField(headProp, new GUIContent("Head"), false, null); }
+            if (torsoProp != null)
+            { EditorGUILayout.PropertyField(torsoProp, new GUIContent("Torso"), false, null); }
+            if (leftArmProp != null)
+            { EditorGUILayout.PropertyField(leftArmProp, new GUIContent("Left Arm"), false, null); }
+            if (rightArmProp != null)
+            { EditorGUILayout.PropertyField(rightArmProp, new GUIContent("Right Arm"), false, null); }
+            if (leftLegProp != null)
+            { EditorGUILayout.PropertyField(leftLegProp, new GUIContent("Left Leg"), false, null); }
+            if (rightLegProp != null)
+            { EditorGUILayout.PropertyField(rightLegProp, new GUIContent("Right Leg"), false, null); }
 
             EditorGUILayout.Space();
-
-            EditorGUILayout.BeginVertical();
+            /*
             EditorGUILayout.PropertyField(headMultiplier, new GUIContent("Head Multiplier"), false, null);
             EditorGUILayout.PropertyField(torsoMultiplier, new GUIContent("Torso Mulitplier"), false, null);
             EditorGUILayout.PropertyField(leftArmMultiplier, new GUIContent("Left Arm Mulitplier"), false, null);
@@ -134,7 +166,7 @@ namespace API_TOOL
             EditorGUILayout.PropertyField(leftLegMultiplier, new GUIContent("Left Leg Multiplier"), false, null);
             EditorGUILayout.PropertyField(rightLegMultiplier, new GUIContent("Right Leg Multiplier"), false, null);
             EditorGUILayout.EndVertical();
-
+            */
             EditorGUILayout.Space();
 
             EditorGUILayout.BeginVertical();

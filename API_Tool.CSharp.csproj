@@ -67,6 +67,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\DamageTest.cs" />
     <Compile Include="Assets\Scripts\E-Z_Damage\BaseCharacter.cs" />
     <Compile Include="Assets\Scripts\E-Z_Damage\BaseCharacterEditor.cs" />
     <Compile Include="Assets\Scripts\E-Z_Damage\BaseObject.cs" />
