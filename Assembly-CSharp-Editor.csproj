@@ -47,9 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Folder Friend\Editor\FolderBuilder.cs" />
-     <Compile Include="Assets\Scripts\Editor\MakeFolder.cs" />
-     <Compile Include="Assets\Scripts\Editor\MakeMaterial.cs" />
-     <Compile Include="Assets\Scripts\Editor\MakePrefab.cs" />
+     <Compile Include="Assets\Scripts\Editor\FolderWindow.cs" />
      <Compile Include="Assets\Scripts\Editor\OrganizeMyShit.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

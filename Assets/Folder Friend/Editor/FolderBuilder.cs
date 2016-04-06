@@ -17,7 +17,7 @@ using System.Collections.Generic;
  */
 
 public class FolderBuilder : EditorWindow {
-
+/*
 	// This list must remain public in order to create child folders inside folders.
 	public static List<Folder> folders;
 
@@ -349,7 +349,7 @@ public class FolderBuilder : EditorWindow {
 	}
 }
 
-public class Folder
+public class aFolder
 {
 	public string folderName;
 	public string parentPath;
@@ -359,7 +359,7 @@ public class Folder
 	public bool editMode = false;
 	public bool imported = false;
 
-	public Folder()
+	public aFolder()
 	{
 		this.folderName = "Assets";
 		this.parentPath = null;
@@ -370,7 +370,7 @@ public class Folder
 		this.imported = false;
 	}
 
-	public Folder(string parentPath, string folderName)
+	public aFolder(string parentPath, string folderName)
 	{
 		this.folderName = folderName;
 		this.parentPath = parentPath;
@@ -380,4 +380,5 @@ public class Folder
 		this.editMode = false;
 		this.imported = false;
 	}
+    */
 }
