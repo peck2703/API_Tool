@@ -1,8 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
-Project("{50442377-E404-5ED5-6A46-7DBDCB87FE5B}") = "API_Tool", "Assembly-CSharp-vs.csproj", "{D1BB03A2-AAAC-38AB-CE45-B5DDD4349D20}"
-EndProject
 Project("{50442377-E404-5ED5-6A46-7DBDCB87FE5B}") = "API_Tool", "Assembly-CSharp-Editor-vs.csproj", "{FCCB129D-6E11-83B8-1162-7950F55D8417}"
 EndProject
 Global
@@ -11,10 +9,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D1BB03A2-AAAC-38AB-CE45-B5DDD4349D20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D1BB03A2-AAAC-38AB-CE45-B5DDD4349D20}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D1BB03A2-AAAC-38AB-CE45-B5DDD4349D20}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D1BB03A2-AAAC-38AB-CE45-B5DDD4349D20}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FCCB129D-6E11-83B8-1162-7950F55D8417}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FCCB129D-6E11-83B8-1162-7950F55D8417}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCCB129D-6E11-83B8-1162-7950F55D8417}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -23,7 +17,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-					GlobalSection(MonoDevelopProperties) = preSolution
+							GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1

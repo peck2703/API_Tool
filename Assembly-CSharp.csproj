@@ -46,7 +46,6 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\DamageTest.cs" />
      <Compile Include="Assets\Scripts\E-Z_Damage\BaseCharacter.cs" />
      <Compile Include="Assets\Scripts\E-Z_Damage\BaseCharacterEditor.cs" />
      <Compile Include="Assets\Scripts\E-Z_Damage\BaseObject.cs" />
@@ -54,27 +53,6 @@
      <Compile Include="Assets\Scripts\E-Z_Damage\DamageCalculator.cs" />
      <Compile Include="Assets\Scripts\E-Z_Damage\DamageWindow.cs" />
      <Compile Include="Assets\Scripts\E-Z_Damage\SetupWindow.cs" />
-     <Compile Include="Assets\YounGen Tech\Health Script\Scripts\Assist Examples\DisplayKills.cs" />
-     <Compile Include="Assets\YounGen Tech\Health Script\Scripts\Effects\SpawnObject.cs" />
-     <Compile Include="Assets\YounGen Tech\Health Script\Scripts\Effects\SpawnOnHealthEvent.cs" />
-     <Compile Include="Assets\YounGen Tech\Health Script\Scripts\Effects\TimedDestroy.cs" />
-     <Compile Include="Assets\YounGen Tech\Health Script\Scripts\Health\Assist.cs" />
-     <Compile Include="Assets\YounGen Tech\Health Script\Scripts\Health\DestroyEvent.cs" />
-     <Compile Include="Assets\YounGen Tech\Health Script\Scripts\Health\Health.cs" />
-     <Compile Include="Assets\YounGen Tech\Health Script\Scripts\Health\HealthEventIndicator.cs" />
-     <Compile Include="Assets\YounGen Tech\Health Script\Scripts\Health\TemporaryHealthBuff.cs" />
-     <Compile Include="Assets\YounGen Tech\Health Script\Scripts\Interfaces\IStat.cs" />
-     <Compile Include="Assets\YounGen Tech\Health Script\Scripts\Other Examples\DoOnAwake.cs" />
-     <Compile Include="Assets\YounGen Tech\Health Script\Scripts\Other Examples\HealthText.cs" />
-     <Compile Include="Assets\YounGen Tech\Health Script\Scripts\Other Examples\RestartScene.cs" />
-     <Compile Include="Assets\YounGen Tech\Health Script\Scripts\Other Examples\SceneManager.cs" />
-     <Compile Include="Assets\YounGen Tech\Health Script\Scripts\Other Examples\Shoot.cs" />
-     <Compile Include="Assets\YounGen Tech\Health Script\Scripts\Other Examples\ToggleTextInfo.cs" />
-     <Compile Include="Assets\YounGen Tech\Health Script\Scripts\Pixelated Example\Attack.cs" />
-     <Compile Include="Assets\YounGen Tech\Health Script\Scripts\Pixelated Example\HealTarget.cs" />
-     <Compile Include="Assets\YounGen Tech\Scripts\Application\OpenLink.cs" />
-     <Compile Include="Assets\YounGen Tech\Scripts\Ownership\Owner.cs" />
-     <Compile Include="Assets\YounGen Tech\Scripts\UI\Tooltip.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
