@@ -109,13 +109,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="API_Tool.CSharp.csproj">
-      <Project>{2905BE4A-F835-5890-DAEA-1297B7F9CCB0}</Project>
-      <Name>API_Tool.CSharp</Name>
-    </ProjectReference>
+    <Compile Include="Assets\Folder Friend\Editor\FolderBuilder.cs" />
+    <Compile Include="Assets\Scripts\Editor\ExtensionBank.cs" />
+    <Compile Include="Assets\Scripts\Editor\ExtensionUnit.cs" />
+    <Compile Include="Assets\Scripts\Editor\ExtensionWindow.cs" />
+    <Compile Include="Assets\Scripts\Editor\FolderWindow.cs" />
+    <Compile Include="Assets\Scripts\Editor\MakeFolder.cs" />
+    <Compile Include="Assets\Scripts\Editor\OrganizeMyShit.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\YounGen Tech\Health Script\Editor\HealthInspector.cs" />
+    <None Include="Assets\Scripts\Editor\Extensions.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
