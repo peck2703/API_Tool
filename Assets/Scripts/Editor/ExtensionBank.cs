@@ -20,6 +20,7 @@ public class ExtensionBank : Editor
         {
             Debug.Log("Index Extension " + theExtensions[index].Extensions);
         }
+        Debug.Log("Index Extension " + theExtensions[index].Extensions);
         return theExtensions[index].Extensions;
     }
     public string GetCategories(int index)

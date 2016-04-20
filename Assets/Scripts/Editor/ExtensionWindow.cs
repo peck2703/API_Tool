@@ -6,7 +6,7 @@ using System.IO;
 
 public class ExtensionWindow : EditorWindow
 {
-    ExtensionBank extBank;
+    SampleExtensionBank extBank;
 
     string[] categories;
     string[] exts;
@@ -37,7 +37,7 @@ public class ExtensionWindow : EditorWindow
 
     void Awake()
     {
-        extBank = new ExtensionBank();
+        extBank = new SampleExtensionBank();
 
         bool success;
 
@@ -52,23 +52,19 @@ public class ExtensionWindow : EditorWindow
         //Debug.Log("Number of Exts is: " + exts.Length);
 
         char[] delimiter = { System.Convert.ToChar(",") };
-      //  Debug.Log("Number of Exts is w/ Delimiter: " + exts.Length);
+        //Debug.Log("Number of Exts is w/ Delimiter: " + exts.Length);
 
-        Debug.Log(success);
-       // success = extBank.PopulateList();
+        //Debug.Log(success);
+        //success = extBank.PopulateList();
 
         if (success)
         {
             Debug.Log(extBank.GetNumOfExtensions);
+
             for (int i = 0; i < extBank.GetNumOfExtensions; i++)
             {
-                Debug.Log("Number of times " + i);
-                /*string shortExtensions = extBank.GetExtensions(i);
-                Debug.Log("Extension at index 0 is: " + extBank.GetExtensions(0));
-                Debug.Log("Extension at index 1 is: " + extBank.GetExtensions(1));
-                Debug.Log("Extension at index 2 is: " + extBank.GetExtensions(2));
-                Debug.Log("Extension is: " + extBank.GetExtensions(i));
-                exts = shortExtensions.Split(delimiter);*/
+                string shortExtensions = extBank.GetExtensions(i);
+                Debug.Log("Extension at index 0 is: " + extBank.GetExtensions(i));
             }
         }
     }
