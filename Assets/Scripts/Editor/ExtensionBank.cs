@@ -15,6 +15,11 @@ public class ExtensionBank : Editor
     }
     public string GetExtensions(int index)
     {
+        Debug.Log("Index " + index);
+        for (int i = 0; i < theExtensions.Count; i++)
+        {
+            Debug.Log("Index Extension " + theExtensions[index].Extensions);
+        }
         return theExtensions[index].Extensions;
     }
     public string GetCategories(int index)
@@ -24,7 +29,7 @@ public class ExtensionBank : Editor
     public int GetNumOfCategories()
     {
         //Debug.Log("Inside Get Num of Categories");
-        if (PopulateList())
+     /*   if (PopulateList())
         {
             Debug.Log("List Populated");
             for (int i = 0; i < theExtensions.Count; i++)
@@ -35,7 +40,7 @@ public class ExtensionBank : Editor
                     Debug.Log(theExtensions[i].Categories);
                 }
             }
-        }
+        }*/
         return differentCategories.Count;
 
     }
@@ -67,24 +72,39 @@ public class ExtensionBank : Editor
                 line = myStreamReader.ReadLine();
 
                 string[] shortExts = line.Split(',');
-                for (int i = 0; i < shortExts.Length; i++)
+                if (shortExts.Length > 1)
                 {
-                    anExtension.Extensions = shortExts[i];
-                    Debug.Log("Extension " + shortExts[i] + " at index: " + i);
-                    theExtensions.Add(anExtension);
-
-                    //Check for more than one extension in each Category
-                    /*if (shortExts.Length < 1)
+                    for (int i = 0; i < shortExts.Length; i++)
                     {
-                        for (int j = 0; j < theExtensions.Count; j++)
+                        anExtension.Extensions = shortExts[i];
+                        Debug.Log("Extension Added " + shortExts[i] + " at index: " + i);
+
+                        theExtensions.Add(anExtension);
+                        //Debug.Log("An Extension " + anExtension.Extensions);
+
+                        Debug.Log("An Extension " + theExtensions.Count);
+
+
+                        //Debug.Log("ShortExts Length is: " + shortExts.Length);
+                        //Check for more than one extension in each Category
+                        /*if (shortExts.Length > 1)
                         {
-                            Debug.Log("Inside for loop at iteration " + j);
-                            Debug.Log("Extension at index " + j + " is: " + anExtension.Extensions);
-                        }
-                    }*/
+                            for (int j = 0; j < theExtensions.Count; j++)
+                            {
+                                Debug.Log("Inside for loop at iteration " + j);
+                                Debug.Log("Extension at index " + j + " is: " + anExtension.Extensions);
+                            }
+                        }*/
+                    }
+                }
+                else
+                {
+                    anExtension.Extensions = line;
+                    theExtensions.Add(anExtension);
                 }
                 line = myStreamReader.ReadLine();
             }
+            myStreamReader.Close();
         }
         catch
         {

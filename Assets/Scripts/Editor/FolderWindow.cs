@@ -18,7 +18,7 @@ public class FolderWindow : EditorWindow {
     private static bool foldersAdded = false;
 
 
-    [MenuItem("Project Tools/E-Z Organizer")]
+    //[MenuItem("Project Tools/E-Z Organizer")]
     // Use this for initialization
     static void createWindow () {
         FolderWindow window = (FolderWindow)EditorWindow.GetWindow(typeof(FolderWindow));
