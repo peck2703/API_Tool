@@ -111,8 +111,8 @@
   <ItemGroup>
     <Compile Include="Assets\Folder Friend\Editor\FolderBuilder.cs" />
     <Compile Include="Assets\Scripts\Editor\ExtensionBank.cs" />
-    <Compile Include="Assets\Scripts\Editor\ExtensionUnit.cs" />
     <Compile Include="Assets\Scripts\Editor\ExtensionWindow.cs" />
+    <Compile Include="Assets\Scripts\Editor\Extensions.cs" />
     <Compile Include="Assets\Scripts\Editor\FolderWindow.cs" />
     <Compile Include="Assets\Scripts\Editor\MakeFolder.cs" />
     <Compile Include="Assets\Scripts\Editor\OrganizeMyShit.cs" />

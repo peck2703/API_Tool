@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Audio
 .wav,.wma,.aac
 Fonts
@@ -10,3 +11,5 @@ Scenes
 .unity
 Scripts
 .cs
+=======
+>>>>>>> parent of 9d5aeac... Extensions Window Pops up
