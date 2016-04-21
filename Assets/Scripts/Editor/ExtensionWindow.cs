@@ -6,7 +6,7 @@ using System.IO;
 
 public class ExtensionWindow : EditorWindow
 {
-    SampleExtensionBank extBank;
+    ExtensionBank extBank;
 
     string[] categories;
     string[] exts;
@@ -31,13 +31,11 @@ public class ExtensionWindow : EditorWindow
         ExtensionWindow myWindow = (ExtensionWindow)EditorWindow.GetWindow(typeof(ExtensionWindow));
         myWindow.title = "Extensions";
         myWindow.minSize = new Vector2(500f, 500f);
-
-        //init();
     }
 
     void Awake()
     {
-        extBank = new SampleExtensionBank();
+        extBank = new ExtensionBank();
 
         bool success;
 
@@ -46,25 +44,19 @@ public class ExtensionWindow : EditorWindow
         Debug.Log("Successfully opened file?? " + success);
 
         categories = new string[extBank.GetNumOfCategories()];
-        //Debug.Log("Number of Cats is: " + categories.Length);
 
         exts = new string[extBank.GetNumOfExtensions];
-        //Debug.Log("Number of Exts is: " + exts.Length);
 
         char[] delimiter = { System.Convert.ToChar(",") };
-        //Debug.Log("Number of Exts is w/ Delimiter: " + exts.Length);
-
-        //Debug.Log(success);
-        //success = extBank.PopulateList();
+        Debug.Log(success);
 
         if (success)
         {
             Debug.Log(extBank.GetNumOfExtensions);
-
             for (int i = 0; i < extBank.GetNumOfExtensions; i++)
             {
+                Debug.Log("Number of times " + i);
                 string shortExtensions = extBank.GetExtensions(i);
-                Debug.Log("Extension at index 0 is: " + extBank.GetExtensions(i));
             }
         }
     }

@@ -15,12 +15,6 @@ public class ExtensionBank : Editor
     }
     public string GetExtensions(int index)
     {
-        Debug.Log("Index " + index);
-        for (int i = 0; i < theExtensions.Count; i++)
-        {
-            Debug.Log("Index Extension " + theExtensions[index].Extensions);
-        }
-        Debug.Log("Index Extension " + theExtensions[index].Extensions);
         return theExtensions[index].Extensions;
     }
     public string GetCategories(int index)
@@ -29,21 +23,7 @@ public class ExtensionBank : Editor
     }
     public int GetNumOfCategories()
     {
-        //Debug.Log("Inside Get Num of Categories");
-     /*   if (PopulateList())
-        {
-            Debug.Log("List Populated");
-            for (int i = 0; i < theExtensions.Count; i++)
-            {
-                if (!differentCategories.Contains(theExtensions[i].Categories.ToString()))
-                {
-                    differentCategories.Add(theExtensions[i].Categories.ToString());
-                    Debug.Log(theExtensions[i].Categories);
-                }
-            }
-        }*/
         return differentCategories.Count;
-
     }
     public bool PopulateList()
     {
@@ -65,44 +45,33 @@ public class ExtensionBank : Editor
             StreamReader myStreamReader = sourceFile.OpenText();
             line = myStreamReader.ReadLine();
 
-            while (line != null)
+            Debug.Log("First Extension is: " + line);
+
+            while (!myStreamReader.EndOfStream)
             {
                 anExtension = new ExtensionUnit();
 
                 anExtension.Categories = line;
                 line = myStreamReader.ReadLine();
 
-                string[] shortExts = line.Split(',');
-                if (shortExts.Length > 1)
+                /*if(line.Substring(0,1) == ".")
                 {
-                    for (int i = 0; i < shortExts.Length; i++)
-                    {
-                        anExtension.Extensions = shortExts[i];
-                        Debug.Log("Extension Added " + shortExts[i] + " at index: " + i);
-
-                        theExtensions.Add(anExtension);
-                        //Debug.Log("An Extension " + anExtension.Extensions);
-
-                        Debug.Log("An Extension " + theExtensions.Count);
+                    //Debug.Log(line.Substring(0, 1));
+                }*/
 
 
-                        //Debug.Log("ShortExts Length is: " + shortExts.Length);
-                        //Check for more than one extension in each Category
-                        /*if (shortExts.Length > 1)
-                        {
-                            for (int j = 0; j < theExtensions.Count; j++)
-                            {
-                                Debug.Log("Inside for loop at iteration " + j);
-                                Debug.Log("Extension at index " + j + " is: " + anExtension.Extensions);
-                            }
-                        }*/
-                    }
-                }
-                else
+                //Debug.Log(line.Substring(0, 1));
+                /*while(line.Substring(0,1) == ".")
                 {
                     anExtension.Extensions = line;
                     theExtensions.Add(anExtension);
-                }
+
+                    //Next extension
+                    line = myStreamReader.ReadLine();
+                }*/
+
+                Debug.Log("Next Extension is: " + line);
+                //Empty blank space
                 line = myStreamReader.ReadLine();
             }
             myStreamReader.Close();
@@ -111,11 +80,12 @@ public class ExtensionBank : Editor
         {
             success = false;
         }
+
         //Debug.Log("At the end, the total Number of Extensions is: " + theExtensions.Count);
-        for (int m = 0; m < theExtensions.Count; m++)
+        /*for (int m = 0; m < theExtensions.Count; m++)
         {
             //Debug.Log("Extension at index m is: " + GetExtensions(m));
-        }
+        }*/
         return success;
     }
 }
