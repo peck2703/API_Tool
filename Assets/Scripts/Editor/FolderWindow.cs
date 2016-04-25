@@ -18,9 +18,10 @@ public class FolderWindow : EditorWindow {
     private static bool foldersAdded = false;
 
 
-    //[MenuItem("Project Tools/E-Z Organizer")]
+    [MenuItem("Project Tools/E-Z Folders")]
     // Use this for initialization
-    static void createWindow () {
+    static void createWindow ()
+    {
         FolderWindow window = (FolderWindow)EditorWindow.GetWindow(typeof(FolderWindow));
         window.title = "Build Folders";
         window.minSize = new Vector2(500f, 500f);
@@ -29,18 +30,14 @@ public class FolderWindow : EditorWindow {
     }
 	
 	// Update is called once per frame
-	private static void init() {
-        if (folders != null)
-            folders.Clear();
-
+	private static void init()
+    {
         folders = new List<Folder>();
 
         Folder assetsFolder = new Folder();
 
         if (folders.Count == 0 || !FolderExists(assetsFolder))
             folders.Add(assetsFolder);
-
-        foldersImported = false;
     }
 
     void OnGUI() {
@@ -54,12 +51,6 @@ public class FolderWindow : EditorWindow {
 
         EditorGUILayout.BeginHorizontal();
 
-        if (!foldersImported && !foldersAdded) {
-            if (GUILayout.Button("Import Current Folders", EditorStyles.miniButton)) {
-                ImportFolders();
-            }
-        }
-
         if (folders.Count <= 1) {
             EditorGUILayout.EndHorizontal();
             return;
@@ -70,9 +61,6 @@ public class FolderWindow : EditorWindow {
             AssetDatabase.Refresh();
         }
 
-        if (GUILayout.Button("Clear Folders", EditorStyles.miniButtonRight)) {
-            init();
-        }
         EditorGUILayout.EndHorizontal();
     }
 
@@ -81,17 +69,15 @@ public class FolderWindow : EditorWindow {
         if (folder.readOnly) { // Assets Folder ONLY 
 
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField(folder.folderName == "Assets" ? "" + folder.folderName : ">  " + folder.folderName);
+            EditorGUILayout.LabelField(folder.folderName + " >  " + folder.folderName);  //folder.folderName == "Assets" ? "" + folder.folderName : ">  " + folder.folderName);
 
             GUIStyle option = null;
             if (folder.folderName == "Assets" || assetsOnlyReadOnly)
                 option = EditorStyles.miniButton;
-            else if (folder.imported)
-                option = EditorStyles.miniButton;
             else
                 option = EditorStyles.miniButtonLeft;
 
-            int widthOfButton = folder.folderName == "Assets" ? (buttonWidth * 4) : buttonWidth;
+            int widthOfButton = buttonWidth;
 
             if (GUILayout.Button("+", option, GUILayout.Width(widthOfButton))) {
                 if (folder.folderName == "Assets")
@@ -105,29 +91,25 @@ public class FolderWindow : EditorWindow {
                     folder.childFolders.Add(newFolder);
                 }
             }
+            if (folder.folderName != "Assets") {
+                if (GUILayout.Button("Edit", EditorStyles.miniButtonMid, GUILayout.Width(buttonWidth * 2))) {
+                    folder.readOnly = false;
+                    folder.editMode = true;
+                }
 
-            if (!folder.imported) {
-                if (folder.folderName != "Assets") {
-                    if (GUILayout.Button("Edit", EditorStyles.miniButtonMid, GUILayout.Width(buttonWidth * 2))) {
-                        folder.readOnly = false;
-                        folder.editMode = true;
+                if (GUILayout.Button("-", EditorStyles.miniButtonRight, GUILayout.Width(widthOfButton))) {
+                    if (folders.Contains(folder)) {
+                        folder.delete = true;
                     }
-
-                    if (GUILayout.Button("-", EditorStyles.miniButtonRight, GUILayout.Width(widthOfButton))) {
-                        if (folders.Contains(folder)) {
-                            folder.markedForDelete = true;
-                        }
-
-                        EditorGUILayout.EndHorizontal();
-                        return;
-                    }
+                    EditorGUILayout.EndHorizontal();
+                    return;
                 }
             }
             EditorGUILayout.EndHorizontal();
-
         }
 
-        else {
+        else
+        {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField(">  " + folder.folderName);
             folder.folderName = GUILayout.TextField(folder.folderName, GUILayout.Width(textWidth));
@@ -152,10 +134,9 @@ public class FolderWindow : EditorWindow {
                 }
             }
 
-            if (GUILayout.Button(">", EditorStyles.miniButtonRight, GUILayout.Width(buttonWidth))) {
+            if (GUILayout.Button("-", EditorStyles.miniButtonRight, GUILayout.Width(buttonWidth))) {
                 if (folders.Contains(folder)) {
-                    folder.markedForDelete = true;
-                    //folders.Remove(folder);
+                    folder.delete = true;
                 }
 
                 EditorGUILayout.EndHorizontal();
@@ -165,17 +146,15 @@ public class FolderWindow : EditorWindow {
         }
 
         foreach (Folder childFolder in folder.childFolders) {
-            if (!childFolder.markedForDelete)
+            if (!childFolder.delete)
                 DrawFolders(childFolder);
-            //else
-            //folder.childFolders.Remove(childFolder);
         }
 
         EditorGUI.indentLevel--;
 
         for (int i = 0; i < folder.childFolders.Count; i++) {
 
-            if (folder.childFolders[i].markedForDelete) {
+            if (folder.childFolders[i].delete) {
                 folder.childFolders.Remove(folder.childFolders[i]);
                 break;
             }
@@ -205,52 +184,10 @@ public class FolderWindow : EditorWindow {
         if (!PathExists(folderPath)) {
             AssetDatabase.CreateFolder(folder.parentPath, folder.folderName);
         }
-        else
-            Debug.Log("The folder: '" + folder.folderName + "' at '" + folderPath + "'" + " already exists.");
 
         foreach (Folder childFolder in folder.childFolders) {
             CreateFolder(childFolder);
         }
-    }
-
-    static void ImportFolders() {
-        //Folder assetFolder = new Folder ();
-        //folders.Clear ();
-        //folders.Add (assetFolder);
-        init();
-
-        foldersImported = true;
-
-        string assetsRootPath = Directory.GetCurrentDirectory() + "\\Assets";
-
-        // Get a list of all directories
-        List<string> directories = CleanDirectories(GetAllDirectories(assetsRootPath));
-
-        foreach (string path in directories) {
-
-            string[] pathSplit = path.Split('\\');
-
-            string str = "";
-
-            for (int i = 0; i < pathSplit.Length; i++) {
-
-                if (i < pathSplit.Length - 1) {
-                    str += pathSplit[i] + "/";
-                }
-                else {
-                    Folder folder = new Folder(str, pathSplit[i]);
-                    folder.readOnly = true;
-                    folder.imported = true;
-
-                    int pathIndex = GetFolderIndex(pathSplit[i - 1]);
-                    if (folders[pathIndex] != null && pathIndex < folders.Count)
-                    {
-                        folders[pathIndex].childFolders.Add(folder);
-                    }
-                    folders.Add(folder);
-                }
-            }
-        } // end foreach
     }
 
     static int GetFolderIndex(string folderName) {
@@ -316,9 +253,8 @@ public class Folder
     public string parentPath;
     public List<Folder> childFolders;
     public bool readOnly = false;
-    public bool markedForDelete = false;
+    public bool delete = false;
     public bool editMode = false;
-    public bool imported = false;
 
     public Folder()
     {
@@ -326,9 +262,8 @@ public class Folder
         this.parentPath = null;
         this.childFolders = new List<Folder>();
         this.readOnly = true;
-        this.markedForDelete = false;
+        this.delete = false;
         this.editMode = false;
-        this.imported = false;
     }
 
     public Folder(string parentPath, string folderName)
@@ -337,8 +272,7 @@ public class Folder
         this.parentPath = parentPath;
         this.childFolders = new List<Folder>();
         this.readOnly = false;
-        this.markedForDelete = false;
+        this.delete = false;
         this.editMode = false;
-        this.imported = false;
     }
 }

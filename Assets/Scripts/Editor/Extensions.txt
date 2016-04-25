@@ -8,6 +8,15 @@ Fonts
 
 Materials
 .mat
+.obj
+
+Models
+.max
+.3ds
+.blend
+.fbx
+.off
+.x
 
 Prefabs
 .prefab
@@ -18,3 +27,12 @@ Scenes
 Scripts
 .cs
 .js
+
+Textures
+.psd
+.png
+.tiff
+.tga
+.bmp
+.gif
+.jpg

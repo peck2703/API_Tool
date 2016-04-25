@@ -1,5 +1,6 @@
 ﻿using UnityEditor;
 using UnityEngine;
+using System;
 using System.IO;
 using System.Collections.Generic;
 
@@ -27,65 +28,38 @@ public class ExtensionBank : Editor
     }
     public bool PopulateList()
     {
-        bool success = true;
-        string path = "Assets/Scripts/Editor/Extensions.txt";
-        sourceFile = new FileInfo("Assets/Scripts/Editor/Extensions.txt");
-
-        if (!File.Exists(path))
-        {
-            Debug.Log("File Does Not Exist");
-            TextWriter tw = new StreamWriter(path, true);
-            tw.Close();
-        }
-        string line;
         ExtensionUnit anExtension;
+        bool success = true;
+        var path = "Assets/Scripts/Editor/Extensions.txt";
 
-        try
+        if(File.Exists(path))
         {
-            StreamReader myStreamReader = sourceFile.OpenText();
-            line = myStreamReader.ReadLine();
-
-            Debug.Log("First Extension is: " + line);
-
-            while (!myStreamReader.EndOfStream)
+            try
             {
-                anExtension = new ExtensionUnit();
+                var fileContent = File.ReadAllLines(path);
 
-                anExtension.Categories = line;
-                line = myStreamReader.ReadLine();
-
-                /*if(line.Substring(0,1) == ".")
+                foreach (var line in fileContent)
                 {
-                    //Debug.Log(line.Substring(0, 1));
-                }*/
+                    anExtension = new ExtensionUnit();
 
-
-                //Debug.Log(line.Substring(0, 1));
-                /*while(line.Substring(0,1) == ".")
-                {
-                    anExtension.Extensions = line;
-                    theExtensions.Add(anExtension);
-
-                    //Next extension
-                    line = myStreamReader.ReadLine();
-                }*/
-
-                Debug.Log("Next Extension is: " + line);
-                //Empty blank space
-                line = myStreamReader.ReadLine();
+                    //Debug.Log("Extension is: " + line);
+                    if (line != "")
+                    {
+                        if(line.Substring(0,1) == ".")
+                        {
+                            Debug.Log("Extension is: " + line);
+                            anExtension.Extensions = line;
+                            theExtensions.Add(anExtension);
+                        }
+                    }
+                }
             }
-            myStreamReader.Close();
+            catch(Exception ex)
+            {
+                Debug.Log(ex);
+                success = false;
+            }
         }
-        catch
-        {
-            success = false;
-        }
-
-        //Debug.Log("At the end, the total Number of Extensions is: " + theExtensions.Count);
-        /*for (int m = 0; m < theExtensions.Count; m++)
-        {
-            //Debug.Log("Extension at index m is: " + GetExtensions(m));
-        }*/
         return success;
     }
 }

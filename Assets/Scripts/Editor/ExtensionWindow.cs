@@ -18,9 +18,6 @@ public class ExtensionWindow : EditorWindow
     public static Vector2 scrollPosition;
     private static int textFieldWidth = 200;
     private static int buttonWidth = 25;
-    private static bool assetsOnlyReadOnly = true;
-    private static bool extensionsImported = false;
-    private static bool extensionsAdded = false;
 
     private static StreamReader myStreamReader;
     private static StreamWriter myStreamWriter;
@@ -44,10 +41,8 @@ public class ExtensionWindow : EditorWindow
         Debug.Log("Successfully opened file?? " + success);
 
         categories = new string[extBank.GetNumOfCategories()];
-
         exts = new string[extBank.GetNumOfExtensions];
 
-        char[] delimiter = { System.Convert.ToChar(",") };
         Debug.Log(success);
 
         if (success)
@@ -55,8 +50,8 @@ public class ExtensionWindow : EditorWindow
             Debug.Log(extBank.GetNumOfExtensions);
             for (int i = 0; i < extBank.GetNumOfExtensions; i++)
             {
-                Debug.Log("Number of times " + i);
                 string shortExtensions = extBank.GetExtensions(i);
+                Debug.Log("Extension Window sees " + shortExtensions + " as an extension");
             }
         }
     }

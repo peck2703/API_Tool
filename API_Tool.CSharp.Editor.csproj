@@ -89,7 +89,6 @@
     <Compile Include="Assets\Scripts\Editor\ExtensionBank.cs" />
     <Compile Include="Assets\Scripts\Editor\ExtensionUnit.cs" />
     <Compile Include="Assets\Scripts\Editor\ExtensionWindow.cs" />
-    <Compile Include="Assets\Scripts\Editor\Extensions.cs" />
     <Compile Include="Assets\Scripts\Editor\FolderWindow.cs" />
     <Compile Include="Assets\Scripts\Editor\MakeFolder.cs" />
     <Compile Include="Assets\Scripts\Editor\OrganizeMyShit.cs" />
@@ -97,7 +96,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scripts\Editor\Extensions.txt" />
-    <None Include="Assets\Scripts\Editor\SampleExtensions.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
