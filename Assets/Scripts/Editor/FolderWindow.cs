@@ -3,107 +3,96 @@ using UnityEngine;
 using System.IO;
 using System.Collections.Generic;
 
-// The script must be placed in the Editor Folder in order to execute.
+// The script must be placed in the Editor FolderInit in order to execute.
 
-public class FolderWindow : EditorWindow {
+public class FolderInitWindow : EditorWindow {
 
-    // List must be public in order for children folders to be created.
-    public static List<Folder> folders;
+    // List must be public in order for children FolderInits to be created.
+    public static List<FolderInit> FolderInits;
 
+    private FolderInit FolderInit;
     private static Vector2 scrollPosition;
     private static int textWidth = 200;
     private static int buttonWidth = 25;
     private static bool assetsOnlyReadOnly = true;
-    private static bool foldersImported = false;
-    private static bool foldersAdded = false;
+    private static bool FolderInitsImported = false;
+    private static bool FolderInitsAdded = false;
 
+    [MenuItem("Project Tools/E-Z Folder")]
 
-    [MenuItem("Project Tools/E-Z Folders")]
-    // Use this for initialization
-    static void createWindow ()
-    {
-        FolderWindow window = (FolderWindow)EditorWindow.GetWindow(typeof(FolderWindow));
-        window.title = "Build Folders";
+    static void createWindow () {
+        FolderInitWindow window = (FolderInitWindow)EditorWindow.GetWindow(typeof(FolderInitWindow));
+        window.title = "Build Folder";
         window.minSize = new Vector2(500f, 500f);
 
         init();
     }
 	
 	// Update is called once per frame
-	private static void init()
-    {
-        folders = new List<Folder>();
+	private static void init() {
+        FolderInits = new List<FolderInit>();
 
-        Folder assetsFolder = new Folder();
+        FolderInit assetsFolderInit = new FolderInit();
 
-        if (folders.Count == 0 || !FolderExists(assetsFolder))
-            folders.Add(assetsFolder);
+        if (FolderInits.Count == 0 || !FolderInitExists(assetsFolderInit))
+            FolderInits.Add(assetsFolderInit);
     }
 
     void OnGUI() {
+
         scrollPosition = GUILayout.BeginScrollView(scrollPosition);
 
         EditorGUI.indentLevel = 0;
 
-        DrawFolders(folders[0]);
+        DrawFolderInits(FolderInits[0]);
 
         GUILayout.EndScrollView();
 
         EditorGUILayout.BeginHorizontal();
 
-        if (folders.Count <= 1) {
+        if (FolderInits.Count <= 1) {
             EditorGUILayout.EndHorizontal();
             return;
         }
 
-        if (GUILayout.Button("Generate Folders", EditorStyles.miniButtonLeft)) {
-            CreateFolder(folders[0]);
-            AssetDatabase.Refresh();
+        if (GUILayout.Button("Generate Folder", EditorStyles.miniButtonLeft)) {
+                CreateFolderInit(FolderInits[0]);
+                AssetDatabase.Refresh();
         }
 
         EditorGUILayout.EndHorizontal();
     }
 
-    private static void DrawFolders(Folder folder) {
+    private static void DrawFolderInits(FolderInit FolderInit) {
         EditorGUI.indentLevel++;
-        if (folder.readOnly) { // Assets Folder ONLY 
+        if (FolderInit.readOnly) { // Assets FolderInit ONLY 
 
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField(folder.folderName + " >  " + folder.folderName);  //folder.folderName == "Assets" ? "" + folder.folderName : ">  " + folder.folderName);
 
             GUIStyle option = null;
-            if (folder.folderName == "Assets" || assetsOnlyReadOnly)
+            if (FolderInit.folderName == "Assets" || assetsOnlyReadOnly)
                 option = EditorStyles.miniButton;
             else
                 option = EditorStyles.miniButtonLeft;
 
             int widthOfButton = buttonWidth;
 
-            if (GUILayout.Button("+", option, GUILayout.Width(widthOfButton))) {
-                if (folder.folderName == "Assets")
-                    foldersAdded = true;
+            if (GUILayout.Button("Add Folder", option, GUILayout.Width(100))) {
+                if (FolderInit.folderName == "Assets")
+                    FolderInitsAdded = true;
 
-                string parentPath = folder.parentPath == null ? "" : folder.parentPath + "/";
-                Folder newFolder = new Folder(parentPath + folder.folderName, "New Folder");
+                string parentPath = FolderInit.parentPath == null ? "" : FolderInit.parentPath + "/";
+                FolderInit newFolderInit = new FolderInit(parentPath + FolderInit.folderName, "New Folder");
 
-                if (!FolderExists(newFolder)) {
-                    folders.Add(newFolder);
-                    folder.childFolders.Add(newFolder);
+                if (!FolderInitExists(newFolderInit)) {
+                    FolderInits.Add(newFolderInit);
+                    FolderInit.childFolders.Add(newFolderInit);
                 }
             }
-            if (folder.folderName != "Assets") {
-                if (GUILayout.Button("Edit", EditorStyles.miniButtonMid, GUILayout.Width(buttonWidth * 2))) {
-                    folder.readOnly = false;
-                    folder.editMode = true;
-                }
+            if (FolderInit.folderName != "Assets") {
+                    FolderInit.readOnly = false;
 
-                if (GUILayout.Button("-", EditorStyles.miniButtonRight, GUILayout.Width(widthOfButton))) {
-                    if (folders.Contains(folder)) {
-                        folder.delete = true;
-                    }
-                    EditorGUILayout.EndHorizontal();
-                    return;
-                }
+                EditorGUILayout.EndHorizontal();
             }
             EditorGUILayout.EndHorizontal();
         }
@@ -111,32 +100,24 @@ public class FolderWindow : EditorWindow {
         else
         {
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField(">  " + folder.folderName);
-            folder.folderName = GUILayout.TextField(folder.folderName, GUILayout.Width(textWidth));
+            EditorGUILayout.LabelField(">  " + FolderInit.folderName);
+            FolderInit.folderName = GUILayout.TextField(FolderInit.folderName, GUILayout.Width(textWidth));
 
-            if (GUILayout.Button("+", EditorStyles.miniButtonLeft, GUILayout.Width(buttonWidth))) {
-                if (folder.folderName == "")
-                    folder.folderName = "New Folder";
+            if (GUILayout.Button(" + ", EditorStyles.miniButtonLeft, GUILayout.Width(buttonWidth))) {
+                if (FolderInit.folderName == "")
+                    FolderInit.folderName = "New Folder";
 
-                if (folder.editMode) {
-                    folder.readOnly = true;
-                    folder.editMode = false;
-                }
-                else {
-                    folder.readOnly = true;
-                    assetsOnlyReadOnly = false;
-                    Folder newFolder = new Folder(folder.parentPath + "/" + folder.folderName, "New Folder");
+                    FolderInit newFolderInit = new FolderInit(FolderInit.parentPath + "/" + FolderInit.folderName, "New Folder");
 
-                    if (!FolderExists(newFolder)) {
-                        folders.Add(newFolder);
-                        folder.childFolders.Add(newFolder);
+                    if (!FolderInitExists(newFolderInit)) {
+                        FolderInits.Add(newFolderInit);
+                        FolderInit.childFolders.Add(newFolderInit);
                     }
-                }
             }
 
             if (GUILayout.Button("-", EditorStyles.miniButtonRight, GUILayout.Width(buttonWidth))) {
-                if (folders.Contains(folder)) {
-                    folder.delete = true;
+                if (FolderInits.Contains(FolderInit)) {
+                    FolderInit.delete = true;
                 }
 
                 EditorGUILayout.EndHorizontal();
@@ -145,24 +126,24 @@ public class FolderWindow : EditorWindow {
             EditorGUILayout.EndHorizontal();
         }
 
-        foreach (Folder childFolder in folder.childFolders) {
-            if (!childFolder.delete)
-                DrawFolders(childFolder);
+        foreach (FolderInit childFolderInit in FolderInit.childFolders) {
+            if (!childFolderInit.delete)
+                DrawFolderInits(childFolderInit);
         }
 
         EditorGUI.indentLevel--;
 
-        for (int i = 0; i < folder.childFolders.Count; i++) {
+        for (int i = 0; i < FolderInit.childFolders.Count; i++) {
 
-            if (folder.childFolders[i].delete) {
-                folder.childFolders.Remove(folder.childFolders[i]);
+            if (FolderInit.childFolders[i].delete) {
+                FolderInit.childFolders.Remove(FolderInit.childFolders[i]);
                 break;
             }
         }
-    } // end DrawFolders
+    } // end DrawFolderInits
 
-    private static bool FolderExists(Folder folder) {
-        if (!folders.Contains(folder))
+    private static bool FolderInitExists(FolderInit FolderInit) {
+        if (!FolderInits.Contains(FolderInit))
             return false;
 
         return true;
@@ -172,28 +153,28 @@ public class FolderWindow : EditorWindow {
         return (Directory.Exists(path));
     }
 
-    static void CreateFolder(Folder folder) {
+    static void CreateFolderInit(FolderInit FolderInit) {
 
-        string folderPath = null;
+        string FolderInitPath = null;
 
-        if (folder.parentPath == null)
-            folderPath = folder.folderName;
+        if (FolderInit.parentPath == null)
+            FolderInitPath = FolderInit.folderName;
         else
-            folderPath = folder.parentPath + "/" + folder.folderName;
+            FolderInitPath = FolderInit.parentPath + "/" + FolderInit.folderName;
 
-        if (!PathExists(folderPath)) {
-            AssetDatabase.CreateFolder(folder.parentPath, folder.folderName);
+        if (!PathExists(FolderInitPath)) {
+            AssetDatabase.CreateFolder(FolderInit.parentPath, FolderInit.folderName);
         }
 
-        foreach (Folder childFolder in folder.childFolders) {
-            CreateFolder(childFolder);
+        foreach (FolderInit childFolderInit in FolderInit.childFolders) {
+            CreateFolderInit(childFolderInit);
         }
     }
 
-    static int GetFolderIndex(string folderName) {
+    static int GetFolderInitIndex(string FolderInitName) {
 
-        for (int i = 0; i < folders.Count; i++) {
-            if (folders[i].folderName == folderName) {
+        for (int i = 0; i < FolderInits.Count; i++) {
+            if (FolderInits[i].folderName == FolderInitName) {
                 return i;
             }
         }
@@ -244,35 +225,5 @@ public class FolderWindow : EditorWindow {
         }
 
         return directoriesList;
-    }
-}
-
-public class Folder
-{
-    public string folderName;
-    public string parentPath;
-    public List<Folder> childFolders;
-    public bool readOnly = false;
-    public bool delete = false;
-    public bool editMode = false;
-
-    public Folder()
-    {
-        this.folderName = "Assets";
-        this.parentPath = null;
-        this.childFolders = new List<Folder>();
-        this.readOnly = true;
-        this.delete = false;
-        this.editMode = false;
-    }
-
-    public Folder(string parentPath, string folderName)
-    {
-        this.folderName = folderName;
-        this.parentPath = parentPath;
-        this.childFolders = new List<Folder>();
-        this.readOnly = false;
-        this.delete = false;
-        this.editMode = false;
     }
 }
