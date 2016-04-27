@@ -35,7 +35,7 @@ public class ExtensionWindow : EditorWindow
     {
         //Get all Category names and store them in a List<>
         LoadFolderNames();
-
+        LoadFolders();
         extBank = new ExtensionBank();
 
         //Populate the bank of Extensions from the .txt file
@@ -51,6 +51,8 @@ public class ExtensionWindow : EditorWindow
                 string shortExtensions = extBank.GetExtensions(i);
             }
         }
+
+        
     }
 
     void OnGUI()
@@ -104,6 +106,15 @@ public class ExtensionWindow : EditorWindow
             }
         }
     }
+
+    void LoadFolders() {
+        foreach (string cat in categories) {
+            string projectPath = Application.dataPath + "/";
+            Directory.CreateDirectory(projectPath + cat);
+        }
+        AssetDatabase.Refresh();
+    }
+
     void OrganizeScripts()                  //Handles between MonoBehaviour and Editor Scripts
     {
         Assembly _assembly = Assembly.Load("Assembly-CSharp");

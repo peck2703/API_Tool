@@ -15,7 +15,7 @@ public class OrganizeMyShit : Editor
 
     static void GenerateFolders()
     {
-        string projectPath = Application.dataPath + "/";
+        /*string projectPath = Application.dataPath + "/";
         Directory.CreateDirectory(projectPath + "Audio");
         Directory.CreateDirectory(projectPath + "Characters");
         Directory.CreateDirectory(projectPath + "Fonts");
@@ -27,7 +27,7 @@ public class OrganizeMyShit : Editor
         Directory.CreateDirectory(projectPath + "Scripts");
         Directory.CreateDirectory(projectPath + "Shaders");
         Directory.CreateDirectory(projectPath + "Sprites");
-        Directory.CreateDirectory(projectPath + "Textures");
+        Directory.CreateDirectory(projectPath + "Textures");*/
 
         AssetDatabase.Refresh();
     }

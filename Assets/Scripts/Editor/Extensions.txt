@@ -40,3 +40,6 @@ Textures
 .bmp
 .gif
 .jpg
+
+Text
+.txt
