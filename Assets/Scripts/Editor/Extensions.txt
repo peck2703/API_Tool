@@ -1,3 +1,7 @@
+Animations
+.anim
+.controller
+
 Audio
 .wav
 .mp3

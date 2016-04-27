@@ -9,7 +9,13 @@ public class ExtensionUnit : Editor
 {
     
     private string m_Extensions;
+    private string m_Categories;
 
+    public string Categories
+    {
+        get { return m_Categories; }
+        set { m_Categories = value; }
+    }
     
     public string Extensions
     {

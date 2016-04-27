@@ -21,11 +21,11 @@ public class ExtensionBank : Editor
     }
     public string GetCategories(int index)
     {
-        return theCategories[index].Categories;
+        return theExtensions[index].Categories;
     }
-    public int GetNumOfCategories()
+    public void SetCategories(int index, string category)
     {
-        return differentCategories.Count;
+        theExtensions[index].Categories = category;
     }
     public bool PopulateList()
     {
@@ -48,7 +48,7 @@ public class ExtensionBank : Editor
                     {
                         if(line.Substring(0,1) == ".")
                         {
-                            Debug.Log("Extension is: " + line);
+                            //Debug.Log("Extension is: " + line);
                             anExtension.Extensions = line;
                             theExtensions.Add(anExtension);
                         }
