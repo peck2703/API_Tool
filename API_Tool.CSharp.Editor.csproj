@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Editor:5</UnityProjectType>
     <UnityBuildTarget>WebPlayer:6</UnityBuildTarget>
     <UnityVersion>5.3.3f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -85,14 +87,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Folder Friend\Editor\FolderBuilder.cs" />
+    <Compile Include="Assets\Scripts\Editor\CatergoryUnit.cs" />
     <Compile Include="Assets\Scripts\Editor\ExtensionBank.cs" />
     <Compile Include="Assets\Scripts\Editor\ExtensionUnit.cs" />
     <Compile Include="Assets\Scripts\Editor\ExtensionWindow.cs" />
     <Compile Include="Assets\Scripts\Editor\FolderWindow.cs" />
     <Compile Include="Assets\Scripts\Editor\MakeFolder.cs" />
     <Compile Include="Assets\Scripts\Editor\OrganizeMyShit.cs" />
-    <Compile Include="Assets\Scripts\Editor\SampleExtensionBank.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scripts\Editor\Extensions.txt" />

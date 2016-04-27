@@ -7,6 +7,7 @@ using System.Collections.Generic;
 public class ExtensionBank : Editor
 {
     List<ExtensionUnit> theExtensions = new List<ExtensionUnit>();
+    List<CatergoryUnit> theCategories = new List<CatergoryUnit>();
     List<string> differentCategories = new List<string>();
     FileInfo sourceFile;
 
@@ -20,7 +21,7 @@ public class ExtensionBank : Editor
     }
     public string GetCategories(int index)
     {
-        return theExtensions[index].Categories;
+        return theCategories[index].Categories;
     }
     public int GetNumOfCategories()
     {
